@@ -17,53 +17,56 @@ def fraccionDia(dia):
     return dia.hour + dia.minute / 60 + dia.second / 3600
 
 def calcularPrecio(tarifa, tiempoDeServicio):
-# Somos una empresa eficiente que trabaja 24/7!
-    precio = 0
+	try:
+	# Somos una empresa eficiente que trabaja 24/7!
+	    precio = 0
+	    assert(tarifa.t_Dias > 0 and  tarifa.t_Fines > 0)
+	    #if tarifa.t_Dias <= 0 or tarifa.t_Fines <= 0:
+	    #    return -1
+	    assert(tiempoDeServicio.inicioDeServicio < tiempoDeServicio.finDeServicio)
+	    # if tiempoDeServicio.inicioDeServicio >= tiempoDeServicio.finDeServicio:
+	    #     return -1
 
-    if tarifa.t_Dias <= 0 or tarifa.t_Fines <= 0:
-        return -1
+	    delta = tiempoDeServicio.finDeServicio - tiempoDeServicio.inicioDeServicio
 
-    if tiempoDeServicio.inicioDeServicio >= tiempoDeServicio.finDeServicio:
-        return -1
+	    total = delta.days * 24 + delta.seconds / 3600
+	    assert(total <= 168.00)
+	    # if total > 168.00:
+	    #     return -1
 
-    delta = tiempoDeServicio.finDeServicio - tiempoDeServicio.inicioDeServicio
+	    if delta.seconds % 3600 > 0:
+	        total = float(int(total)) + 1.000
 
-    total = delta.days * 24 + delta.seconds / 3600
+	    inicio = datetime.weekday(tiempoDeServicio.inicioDeServicio)
+	    if delta.days > 0:
+	        fin = datetime.weekday(tiempoDeServicio.finDeServicio)
+	        if inicio in (5,6):
+	            precio += tarifa.t_Fines * (24.00 - fraccionDia(
+	                tiempoDeServicio.inicioDeServicio))
+	        else:
+	            precio += tarifa.t_Dias * (24.00 - fraccionDia(
+	                tiempoDeServicio.inicioDeServicio))
+	        for x in range(delta.days):
+	            if (inicio + x + 1) % 7 in (5,6):
+	                if (inicio + x + 1) % 7 != fin:
+	                    precio += tarifa.t_Fines * 24
+	                else:
+	                    precio += tarifa.t_Fines * fraccionDia(
+	                        tiempoDeServicio.finDeServicio)
+	            else:
+	                if (inicio + x + 1) % 7 != fin:
+	                    precio += tarifa.t_Dias * 24
+	                else:
+	                    precio += tarifa.t_Dias * fraccionDia(
+	                        tiempoDeServicio.finDeServicio)
+	    else:
+	        if inicio in (5,6):
+	            precio = tarifa.t_Fines * total
+	        else:
+	            precio = tarifa.t_Dias * total
 
-    if total > 168.00:
-        return -1
+	    assert(precio > 0.00)
 
-    if delta.seconds % 3600 > 0:
-        total = float(int(total)) + 1.000
-
-    inicio = datetime.weekday(tiempoDeServicio.inicioDeServicio)
-    if delta.days > 0:
-        fin = datetime.weekday(tiempoDeServicio.finDeServicio)
-        if inicio in (5,6):
-            precio += tarifa.t_Fines * (24.00 - fraccionDia(
-                tiempoDeServicio.inicioDeServicio))
-        else:
-            precio += tarifa.t_Dias * (24.00 - fraccionDia(
-                tiempoDeServicio.inicioDeServicio))
-        for x in range(delta.days):
-            if (inicio + x + 1) % 7 in (5,6):
-                if (inicio + x + 1) % 7 != fin:
-                    precio += tarifa.t_Fines * 24
-                else:
-                    precio += tarifa.t_Fines * fraccionDia(
-                        tiempoDeServicio.finDeServicio)
-            else:
-                if (inicio + x + 1) % 7 != fin:
-                    precio += tarifa.t_Dias * 24
-                else:
-                    precio += tarifa.t_Dias * fraccionDia(
-                        tiempoDeServicio.finDeServicio)
-    else:
-        if inicio in (5,6):
-            precio = tarifa.t_Fines * total
-        else:
-            precio = tarifa.t_Dias * total
-
-    assert(precio > 0.00)
-
-    return precio
+	    return precio
+	except:
+		pass
