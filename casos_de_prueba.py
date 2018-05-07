@@ -72,13 +72,13 @@ class FuncionTestCase(unittest.TestCase):
 		fare = Tarifa(1.0, 2.0)
 		period = TiempoDeTrabajo("2018-05-06 06:00:00", "2018-05-06 05:59:00")
 		result = calcularPrecio(fare, period)
-		self.assertEqual(result, -1)
+		self.assertEqual(result, None)
 
 	def test_periodoLargo_calcularPrecio(self):
 		fare = Tarifa(1.0, 2.0)
 		period = TiempoDeTrabajo("2018-05-06 06:00:00", "2018-05-13 17:00:00")
 		result = calcularPrecio(fare, period)
-		self.assertEqual(result, -1)
+		self.assertEqual(result, None)
 
 	def test_periodoPermitido_calcularPrecio(self):
 		fare = Tarifa(1.0, 2.0)
@@ -108,19 +108,19 @@ class FuncionTestCase(unittest.TestCase):
 		fare = Tarifa(1.0, 2.0)
 		period = TiempoDeTrabajo("2018-05-06 06:00:00", "2018-05-06 06:00:00")
 		result = calcularPrecio(fare, period)
-		self.assertEqual(result, -1)
+		self.assertEqual(result, None)
 
 	def test_tarifasNegativas_calcularPrecio(self):
 		fare = Tarifa(-1.0, -2.0)
 		period = TiempoDeTrabajo("2018-05-06 06:00:00", "2018-05-06 17:00:00")
 		result = calcularPrecio(fare, period)
-		self.assertEqual(result, -1)
+		self.assertEqual(result, None)
 
 	def test_tarifasNulas_calcularPrecio(self):
 		fare = Tarifa(0.00, 0.00)
 		period = TiempoDeTrabajo("2018-05-06 06:00:00", "2018-05-06 17:00:00")
 		result = calcularPrecio(fare, period)
-		self.assertEqual(result, -1)
+		self.assertEqual(result, None)
 
 	def test_tarifasPositivas_calcularPrecio(self):
 		fare = Tarifa(1.0, 2.0)
