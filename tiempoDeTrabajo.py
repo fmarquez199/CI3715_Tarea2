@@ -8,6 +8,7 @@ Autores: Daniel Francis     12-10863
 
 Fecha:06/05/2018.
 """
+from datetime import datetime
 
 class TiempoDeTrabajo:
     def __init__(self,inicioDeServicio,finDeServicio):
