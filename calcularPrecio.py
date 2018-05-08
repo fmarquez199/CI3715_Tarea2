@@ -28,7 +28,6 @@ Funcion que toma un objeto Tarifa y un objeto TiempoDeServicio y retorna el
 valor a pagar por un servicio prestado.
 """
 def calcularPrecio(tarifa, tiempoDeServicio):
-<<<<<<< HEAD
     try:
         precio = 0.00 #Variable donde se retornara el resultado de la funcion.
         total = 0.00 #Variable auxiliar para conocer la duracion del servicio.
@@ -38,7 +37,7 @@ def calcularPrecio(tarifa, tiempoDeServicio):
 
         #La fecha de inicio del servicio debe ser menor que la fecha de fin.
         assert(tiempoDeServicio.inicioDeServicio 
-            < tiempoDeServicio.finDeServicio)
+               < tiempoDeServicio.finDeServicio)
 
         delta = (
             tiempoDeServicio.finDeServicio - tiempoDeServicio.inicioDeServicio)
@@ -54,79 +53,34 @@ def calcularPrecio(tarifa, tiempoDeServicio):
         
         #inicio es una variable auxiliar para marcar el comienzo del servicio.
         inicio = datetime.weekday(tiempoDeServicio.inicioDeServicio)
-
         if delta.days > 0: #El servicio duro un dia o mas.
             #fin, igual que inicio, marca el fin del servicio.
             fin = datetime.weekday(tiempoDeServicio.finDeServicio)
-
             if inicio in (5,6): #Comienzo en fin de semana.
                 precio += tarifa.t_Fines * (24.00 - fraccionDia(
                     tiempoDeServicio.inicioDeServicio))
             else: #Comienzo en dia de semana.
                 precio += tarifa.t_Dias * (24.00 - fraccionDia(
                     tiempoDeServicio.inicioDeServicio))
-            
-            for x in range(delta.days): #Acumulamos las horas de los dias.
-=======
-	try:
-	    precio = 0.00 #Variable donde se retornara el resultado de la funcion.
-        total = 0.00 #Variable auxiliar para conocer la duracion del servicio.
-        
-        #Las tarifas en el objeto Tarifa deben ser positivas.
-	    assert(tarifa.t_Dias > 0 and  tarifa.t_Fines > 0)
-
-	    #La fecha de inicio del servicio debe ser menor que la fecha de fin.
-        assert(tiempoDeServicio.inicioDeServicio 
-               < tiempoDeServicio.finDeServicio)
-
-	    delta = (
-            tiempoDeServicio.finDeServicio - tiempoDeServicio.inicioDeServicio)
-
-	    total = delta.days * 24 + delta.seconds / 3600
-        
-        #El tiempo total del servicio no puede exceder de 7 dias (168 horas).
-	    assert(total <= 168.00)
-
-        #Las fracciones de hora se cobran como una hora adicional.
-	    if delta.seconds % 3600 > 0:
-	        total = float(int(total)) + 1.000
-        
-        #inicio es una variable auxiliar para marcar el comienzo del servicio.
-	    inicio = datetime.weekday(tiempoDeServicio.inicioDeServicio)
-	    if delta.days > 0: #El servicio duro un dia o mas.
-            #fin, igual que inicio, marca el fin del servicio.
-	        fin = datetime.weekday(tiempoDeServicio.finDeServicio)
-	        if inicio in (5,6): #Comienzo en fin de semana.
-	            precio += tarifa.t_Fines * (24.00 - fraccionDia(
-	                tiempoDeServicio.inicioDeServicio))
-	        else: #Comienzo en dia de semana.
-	            precio += tarifa.t_Dias * (24.00 - fraccionDia(
-	                tiempoDeServicio.inicioDeServicio))
-	        #Acumulamos las horas de los dias.
+            #Acumulamos las horas de los dias.
             for x in range(delta.days):
->>>>>>> d39384f67a8360ccca5e9bcd6dc9dbc99dc40e7d
                 #next_day tiene el dia siguiente en la semana.
                 next_day = (inicio + x + 1) % 7
                 #fin_de_semana indica si next_day es fin de semana.
                 fin_de_semana = next_day in (5,6)
-<<<<<<< HEAD
-
                 if fin_de_semana: #Si sigue un fin de semana.
-
                     if next_day != fin: #Si es el fin del servicio.
                         precio += tarifa.t_Fines * 24
                     else: #Si no es el fin del servicio.
                         precio += tarifa.t_Fines * fraccionDia(
                             tiempoDeServicio.finDeServicio)
                 else: #Si sigue un dia de semana.
-
                     if next_day != fin: #Si es el fin del servicio.
                         precio += tarifa.t_Dias * 24
                     else: #Si no es el fin del servicio.
                         precio += tarifa.t_Dias * fraccionDia(
                             tiempoDeServicio.finDeServicio)
         else: #Si el servicio duro un menos de un dia.
-
             if inicio in (5,6): #Si fue fin de semana.
                 precio = tarifa.t_Fines * total
             else: #Si fue dia de semana.
@@ -139,30 +93,3 @@ def calcularPrecio(tarifa, tiempoDeServicio):
     except:
         #Si se recibe algo anormal, no se hace nada.
         pass
-=======
-	            if fin_de_semana: #Si sigue un fin de semana.
-	                if next_day != fin: #Si es el fin del servicio.
-	                    precio += tarifa.t_Fines * 24
-	                else: #Si no es el fin del servicio.
-	                    precio += tarifa.t_Fines * fraccionDia(
-	                        tiempoDeServicio.finDeServicio)
-	            else: #Si sigue un dia de semana.
-	                if next_day != fin: #Si es el fin del servicio.
-	                    precio += tarifa.t_Dias * 24
-	                else: #Si no es el fin del servicio.
-	                    precio += tarifa.t_Dias * fraccionDia(
-	                        tiempoDeServicio.finDeServicio)
-	    else: #Si el servicio duro un menos de un dia.
-	        if inicio in (5,6): #Si fue fin de semana.
-	            precio = tarifa.t_Fines * total
-	        else: #Si fue dia de semana.
-	            precio = tarifa.t_Dias * total
-        
-        #El monto a pagar debe ser positivo.
-	    assert(precio > 0.00)
-
-	    return precio
-	except:
-        #Si se recibe algo anormal, no se hace nada.
-		pass
->>>>>>> d39384f67a8360ccca5e9bcd6dc9dbc99dc40e7d
