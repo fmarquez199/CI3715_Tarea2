@@ -24,14 +24,14 @@ repr).
 """
 class Tarifa:
 	#Metodo de inicializacion de la clase.
-    def __init__(self,t_Dias,t_Fines):
+    def __init__(self, t_Dias: float, t_Fines: float) -> 'void':
         self.t_Dias = t_Dias
         self.t_Fines = t_Fines
 
     #Metodo de representacion como cadena.
-    def __str__(self):
+    def __str__(self) -> str:
         return "(%f,%f)" % (self.t_Dias,self.t_Fines)
 
     #Metodo de representacion de la clase por salida estandar.
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__

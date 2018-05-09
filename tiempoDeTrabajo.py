@@ -25,16 +25,20 @@ repr).
 """
 class TiempoDeTrabajo:
     #Metodo de inicializacion de la clase.
-    def __init__(self,inicioDeServicio,finDeServicio):
-        self.inicioDeServicio = datetime.strptime(
-            inicioDeServicio,'%Y-%m-%d %H:%M:%S')
-        self.finDeServicio = datetime.strptime(
-            finDeServicio,'%Y-%m-%d %H:%M:%S')
+    def __init__(self, inicioDeServicio: str, finDeServicio: str) -> 'void':
+        try:
+            self.inicioDeServicio = datetime.strptime(
+                inicioDeServicio,'%Y-%m-%d %H:%M:%S')
+            self.finDeServicio = datetime.strptime(
+                finDeServicio,'%Y-%m-%d %H:%M:%S')
+        except:
+            self.inicioDeServicio = None
+            self.finDeServicio = None
 
     #Metodo de representacion como cadena.
-    def __str__(self):
+    def __str__(self) -> str:
         return "(%s,%s)" % (self.inicioDeServicio,self.finDeServicio)
 
     #Metodo de representacion de la clase por salida estandar.
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__
