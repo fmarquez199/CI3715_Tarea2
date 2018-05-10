@@ -42,6 +42,9 @@ def calcularPrecio(tarifa: Tarifa, tiempoDeServicio: TiempoDeTrabajo) -> float:
         assert(tiempoDeServicio.inicioDeServicio 
                < tiempoDeServicio.finDeServicio)
 
+        #La fecha de inicio se calcula para máximo 10 años atrás
+        assert(tiempo.DeServicio.inicioDeServicio > datetime.datetime.now - datetime.timedelta(days=10*365))
+
         delta = (
             tiempoDeServicio.finDeServicio - tiempoDeServicio.inicioDeServicio)
 
