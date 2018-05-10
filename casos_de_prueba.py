@@ -139,6 +139,13 @@ class FuncionTestCase(unittest.TestCase):
         result = calcularPrecio(fare, period)
         self.assertEqual(result, None)
 
+    #Verifica que el año de inicio no puede ser más vieja que 10 años atrás
+    def test_periodoVacio_calcularPrecio(self) -> 'void':
+        fare = Tarifa(1.0, 2.0)
+        period = TiempoDeTrabajo("2007-05-06 06:00:00", "2018-05-06 06:00:00")
+        result = calcularPrecio(fare, period)
+        self.assertEqual(result, None)
+
     #Verifica que no se introduzcan tarifas de semana iguales a tarifas de fin
     #de semana.
     def test_tarifasIguales_calcularPrecio(self) -> 'void':
