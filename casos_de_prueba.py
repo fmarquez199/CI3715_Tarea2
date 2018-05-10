@@ -7,45 +7,47 @@ calcularPrecio().
 Los casos de prueba son (ordenados alfabeticamente):
 
     1.  test_exists_calcularPrecio: Verifica que la funcion calcularPrecio() se
-    encuentre declarada.
+    encuentre declarada. (Malicia)
     2.  test_fechaInvalida_calcularPrecio: Verifica que no se introduzca una
-    fecha incorrecta como 30 de feb.
+    fecha incorrecta como 30 de feb. (Malicia)
     3.  test_horaInvalida_calcularPrecio: Verifica que no se introduzca una
-    hora incorrecta como 25:00:00.
+    hora incorrecta como 25:00:00. (Malicia)
     4.  test_periodoCorto_calcularPrecio: Verifica que la funcion
-    calcularPrecio() maneje correctamente los casos de menos de una hora.
+    calcularPrecio() maneje correctamente los casos de menos de una hora. (Esquina)
     5.  test_periodoFalso_calcularPrecio: Verifica que la funcion
-    calcularPrecio() maneje correctamente periodos invalidos.
+    calcularPrecio() maneje correctamente periodos invalidos. (Esquina)
     6.  test_periodoLargo_calcularPrecio: Verifica que la funcion
-    calcularPrecio() maneje correctamente los periodos mayores a una semana.
+    calcularPrecio() maneje correctamente los periodos mayores a una semana. (Esquina)
     7.  test_periodoPermitido_calcularPrecio: Verifica que la funcion
-    calcularPrecio() ejecute el calculo cuando el periodo es valido.
+    calcularPrecio() ejecute el calculo cuando el periodo es valido. (Malicia)
     8.  test_periodoSemanaCompleta_calcularPrecio: Verifica que la funcion
     calcularPrecio() ejecute el calculo correspondiente a una semana completa
-    correctamente.
+    correctamente. (Frontera)
     9.  test_periodoSemanaYFin_calcularPrecio: Verifica que la funcion
     calcularPrecio() ejecute el calculo correspondiente a un dia de fin de
-    fin de semana y a un dia de semana, correctamente.
+    fin de semana y a un dia de semana, correctamente. (Frontera)
     10. test_periodoSemanaYFin2_calcularPrecio: Verifica que la funcion
     calcularPrecio() ejecute el calculo correspondiente a un dia de fin de
-    semana y a varios dias de semana, correctamente.
+    semana y a varios dias de semana, correctamente. (Frontera)
     11. test_periodoVacio_calcularPrecio: Verifica que la funcion
-    calcularPrecio() maneje los periodos de 0 segundos.
-    12. test_tarifasIguales_calcularPrecio: Verifica que no se introduzcan
-    tarifas de semana iguales a tarifas de fin de semana.
-    13. test_tarifasNegativas_calcularPrecio: Verifica que la funcion maneje
-    tarifas negativas.
-    14. test_tarifasNulas_calcularPrecio: Verifica que la funcion maneje las
-    tarifas nulas.
-    15. test_tarifasPositivas_calcularPrecio: Verifica que la funcion maneje
-    las tarifas positivas.
+    calcularPrecio() maneje los periodos de 0 segundos. (Frontera)
+    12. test_periodoViejo_calcularPrecio: Verifica que la funcion
+    calcularPrecio() maneje los periodos solo más recientes que hace 10 años. (Esquina)
+    13. test_tarifasIguales_calcularPrecio: Verifica que no se introduzcan
+    tarifas de semana iguales a tarifas de fin de semana. (Malicia)
+    14. test_tarifasNegativas_calcularPrecio: Verifica que la funcion maneje
+    tarifas negativas. (Esquina)
+    15. test_tarifasNulas_calcularPrecio: Verifica que la funcion maneje las
+    tarifas nulas. (Esquina)
+    16. test_tarifasPositivas_calcularPrecio: Verifica que la funcion maneje
+    las tarifas positivas. (Malicia)
 
 Autores: Daniel Francis     12-10863
          Francisco Marquez  12-11163
 
 Equipo: Null Pointer Exception
 
-Fecha: 07/05/2018.
+Fecha: 09/05/2018.
 """
 
 import unittest
@@ -140,7 +142,7 @@ class FuncionTestCase(unittest.TestCase):
         self.assertEqual(result, None)
 
     #Verifica que el año de inicio no puede ser más vieja que 10 años atrás
-    def test_periodoVacio_calcularPrecio(self) -> 'void':
+    def test_periodoViejo_calcularPrecio(self) -> 'void':
         fare = Tarifa(1.0, 2.0)
         period = TiempoDeTrabajo("2007-05-06 06:00:00", "2018-05-06 06:00:00")
         result = calcularPrecio(fare, period)
